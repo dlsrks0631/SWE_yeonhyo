@@ -35,3 +35,5 @@ while True:
     # 예외
     else:
         print("예외처리")
+
+    #빼기 계산기 함수
