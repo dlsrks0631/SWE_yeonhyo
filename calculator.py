@@ -43,37 +43,49 @@ def is_integer(str):
     """Returns True if the string is an integer."""
     return re.match("[-]?\d+$", str) != None
 
+# 후위표현식 계산 함수
 def calc_postfix_expr(postfix_expression):
+    """Calculate postfix expression"""
     # 피연산자 스택
     operand_stack = []
 
     for element in postfix_expression:
         # 피연산자인 경우
         if is_integer(element):
+            # 피연산자 스택에 삽입
             operand_stack.append(int(element))
         # 연산자인 경우
         elif element in Operator.operate:
+            # 피연산자 스택에서 두 피연산자를 추출
             operand2 = operand_stack.pop()
             operand1 = operand_stack.pop()
 
+            # 연산자와 피연산자들로 연산 수행 후 result에 저장
             result = Operator.operate[element](operand1, operand2)
             
+            # 피연산자 스택에 결과 삽입
             operand_stack.append(result)
 
     return operand_stack.pop()
 
-
+# 중위표현식을 후위표현식으로 변환
 def infix_to_postfix(infix_expression):
     """Converts an infix expression to a postfix expression"""
+    # 연산자 스택
     operator_stack = []
+    # 후위표현식 리스트
     postfix_expression = []
 
     for element in infix_expression:
         # 피연산자인 경우
         if is_integer(element):
+            # 후위표현식 리스트에 삽입
             postfix_expression.append(element)
         # 연산자인 경우
         elif element in Operator.operate:
+            # 스택의 상단에 있는 연산자와 현재 연산자의 우선순위를 비교
+            # - 현재 연산자보다 상단의 연산자 우선순위가 낮으면 현재 연산자를 스택에 삽입
+            # - 현재 연산자보다 상단의 연산자 우선순위가 높거나 같으면 스택에서 pop하여 후위표현식 리스트에 삽입
             while operator_stack:
                 operator = operator_stack[-1]
                 if Operator.precedence[element] <= Operator.precedence[operator]:
@@ -83,6 +95,7 @@ def infix_to_postfix(infix_expression):
                     break
             operator_stack.append(element)
 
+    # 스택에 남은 연산자들을 후위표현식에 삽입
     while operator_stack:
         postfix_expression.append(operator_stack.pop())
 
