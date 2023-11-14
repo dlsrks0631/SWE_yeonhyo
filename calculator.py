@@ -135,12 +135,14 @@ def get_user_input():
 def has_error(user_inputs):
     # 사용자 입력이 없는 경우 ('='만 입력된 경우)
     is_empty = len(user_inputs) == 0
+    # 마지막 입력이 연산자인 경우
+    is_operator_last_elem = user_inputs[-1] in Operator.operate
     # 모든 짝수 번째 요소들이 정수인 경우
     is_integer_even_elem = all(is_integer(element) for element in user_inputs[0::2])
     # 모든 홀수 번째 요소들이 연산자인 경우
     is_operator_odd_elem = all((element in Operator.operate) for element in user_inputs[1::2])
     
-    return is_empty or not (is_integer_even_elem and is_operator_odd_elem)
+    return is_empty or is_operator_last_elem or not (is_integer_even_elem and is_operator_odd_elem)
 
 
 def run_calculator():
