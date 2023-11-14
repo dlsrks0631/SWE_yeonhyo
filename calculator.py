@@ -119,12 +119,11 @@ def get_user_input():
     return user_inputs
 
 # 사용자 입력에 오류가 있는지 확인한다.
-def check_error(user_inputs):
-    has_error = False
+def has_error(user_inputs):
+    # 모든 짝수 번째 요소들이 정수이면서 모든 홀수 번째 요소들이 연산자이면 정상 입력
+    return not (all(is_integer(element) for element in user_inputs[0::2]) and\
+                all((element in Operator.operate) for element in user_inputs[1::2]))
 
-    # TODO: 사용자 입력 오류 확인
-    
-    return has_error
 
 def run_calculator():
     """Run calculator and return the result."""
@@ -136,7 +135,7 @@ def run_calculator():
         return message
     
     # 입력 오류 존재 시 오류 메시지 반환
-    if check_error(user_inputs):
+    if has_error(user_inputs):
         return ERROR_MESSAGE
 
     # 입력 식 계산
