@@ -1,6 +1,6 @@
 # exceptions.py
 
-from constants.py import EASTER_EGG_MESSAGE
+from constants import EASTER_EGG_MESSAGE
 
 # 이스터에그 예외 정의
 class EasterEggException(Exception):
