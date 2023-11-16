@@ -2,7 +2,7 @@ import re
 
 from constants import EASTER_EGG_CODE, ERROR_MESSAGE
 from exceptions import EasterEggException
-from operatorasm import add, sub, mul
+from operatorasm import *
 
 # 정규표현식을 이용한 정수 확인 함수
 def is_integer(str):
